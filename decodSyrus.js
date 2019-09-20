@@ -1,7 +1,9 @@
 // jshint esversion: 6
-const sqlite3 = require('sqlite3').verbose();
+
+const mysql = require('mysql');
+
 exports.decode = (msg) => {
-    let message = msg.toString();
+    const message = msg.toString();
     const numWeeks = parseInt(message.slice(6, 10));
     const numDay = parseInt(message[10]);
     const dayTime = parseInt(message.slice(11, 16)) - (5 * 3600);
@@ -11,39 +13,44 @@ exports.decode = (msg) => {
     const lon = parseInt(message.slice(24, 33)) / 100000;
     const lat = parseInt(message.slice(16, 24)) / 100000;
     return {
-        $lat: lat,
-        $lon: lon,
-        $time: date
+        lat: lat,
+        lon: lon,
+        time: date
     };
 
 };
 
 exports.insert = (msg) => {
-    let db = new sqlite3.Database('./syrusDB.db', (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Connected to the syrus database.');
+    const con = mysql.createConnection({
+        host: "db4free.net",
+        user: "puccinic",
+        password: "dinosaurio.99",
+        database: "pruebasyrus1"
     });
-    db.run(`INSERT INTO SyrusData(Latitude,Longitude,Time) VALUES($lat,$lon,$time)`, msg, function(err) {
-        if (err) {
-            return console.log(err.message);
-        }
-        // get the last insert id
-        console.log('inserted object successfully');
+
+    con.connect();
+    const sql = `INSERT INTO SyrusData(Latitud,Longitude,Time) VALUES(${msg.lat},${msg.lon},'${msg.time}')`;
+    con.query(sql,function(err, result) {
+        if (err) throw err;
+        console.log("1 record inserted");
     });
-    db.close();
+    con.end();
 };
 
 
-exports.get = (request,response) => {
-    let db = new sqlite3.Database('./syrusDB.db');
-    db.get(`SELECT Latitude lat, Longitude lon, Time time FROM SyrusData WHERE Num = (SELECT Max(Num) FROM SyrusData);`, (err, row) => {
-        if (err) {
-            return console.error(err.message);
-        }else{
-            response.json(row);
-        }
+exports.get = (request, response) => {
+    const con = mysql.createConnection({
+        host: "db4free.net",
+        user: "puccinic",
+        password: "dinosaurio.99",
+        database: "pruebasyrus1"
     });
-    db.close();
+
+    con.connect();
+    const sql = "SELECT Latitud AS lat, Longitude AS lon, Time AS time FROM SyrusData WHERE Num = (SELECT Max(Num) FROM SyrusData);";
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        response.json(result[0]);
+    });
+    con.end();
 };

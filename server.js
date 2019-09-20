@@ -2,7 +2,7 @@
 
 const dgram = require('dgram');
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
+const mysql = require('mysql');
 const decodSyrus = require('./decodSyrus.js');
 const IP_ADRESS = '192.168.1.13';
 const UDP_PORT = '5000';
