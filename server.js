@@ -1,5 +1,5 @@
 // jshint esversion: 6
-
+// Backbone of server
 const dgram = require('dgram');
 const express = require('express');
 const mysql = require('mysql');
