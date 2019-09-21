@@ -40,10 +40,10 @@ exports.insert = (msg) => {
 
 exports.get = (request, response) => {
     const con = mysql.createConnection({
-        host: "db4free.net",
-        user: "puccinic",
-        password: "dinosaurio.99",
-        database: "pruebasyrus1"
+        host: "host name",
+        user: "user name",
+        password: "pasword",
+        database: "DB name"
     });
 
     con.connect();
