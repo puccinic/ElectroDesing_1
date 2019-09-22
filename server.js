@@ -4,8 +4,8 @@ const dgram = require('dgram');
 const express = require('express');
 const mysql = require('mysql');
 const decodSyrus = require('./decodSyrus.js');
-const IP_ADRESS = '192.168.1.13';
-const UDP_PORT = '5000';
+const IP_ADRESS = '172.31.27.19';
+const UDP_PORT = '50000';
 const TCP_PORT = 3000;
 
 const server = dgram.createSocket('udp4');
