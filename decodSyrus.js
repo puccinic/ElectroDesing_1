@@ -22,10 +22,10 @@ exports.decode = (msg) => {
 
 exports.insert = (msg) => {
     const con = mysql.createConnection({
-        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
-        user: "admin",
-        password: "dinosaurio.99",
-        database: "DesignDB"
+        host: "Hostname",
+        user: "Username",
+        password: "Password",
+        database: "DB name"
     });
 
     con.connect();
@@ -40,10 +40,10 @@ exports.insert = (msg) => {
 
 exports.get = (request, response) => {
     const con = mysql.createConnection({
-        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
-        user: "admin",
-        password: "dinosaurio.99",
-        database: "DesignDB"
+        host: "Hostname",
+        user: "Username",
+        password: "Password",
+        database: "DB name"
     });
 
     con.connect();
