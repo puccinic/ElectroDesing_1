@@ -26,7 +26,7 @@ req.onreadystatechange = function(aEvt) {
             if (polyline.isEmpty()||((res.lat != lastPos.lat) && (res.lon != lastPos.lng))){
                 polyline.addLatLng([res.lat, res.lon]);
                 marker.setLatLng([res.lat, res.lon]);
-	            markers.push(L.circleMarker([res.lat,res.lon],5).addTo(mymap));
+	            markers.push(L.circleMarker([res.lat,res.lon],5).addTo(mymap).setRadius(1));
             }
         }
     }
