@@ -9,7 +9,7 @@ exports.decode = (msg) => {
     const dayTime = parseInt(message.slice(11, 16)) - (5 * 3600);
     const totalSeconds = (numWeeks * 604800) + (numDay * 86400) + dayTime;
     const totalMilis = totalSeconds * 1000;
-    const date = new Date(totalMilis + new Date(1980, 0, 6).getTime()).toString();
+    const date = totalMilis + (new Date(1980, 0, 6).getTime());
     const lon = parseInt(message.slice(24, 33)) / 100000;
     const lat = parseInt(message.slice(16, 24)) / 100000;
     return {
@@ -22,17 +22,17 @@ exports.decode = (msg) => {
 
 exports.insert = (msg) => {
     const con = mysql.createConnection({
-        host: "Hostname",
-        user: "Username",
-        password: "Password",
-        database: "DB name"
+        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
+        user: "admin",
+        password: "dinosaurio.99",
+        database: "DesignDB"
     });
 
     con.connect();
-    const sql = `INSERT INTO SyrusData(Latitud,Longitude,Time) VALUES(${msg.lat},${msg.lon},'${msg.time}')`;
+    const sql = `INSERT INTO SyrusData(Latitude,Longitude,Time) VALUES(${msg.lat},${msg.lon},'${msg.time}')`;
     con.query(sql,function(err, result) {
         if (err) throw err;
-        console.log("1 record inserted");
+        console.log("record inserted");
     });
     con.end();
 };
@@ -40,14 +40,14 @@ exports.insert = (msg) => {
 
 exports.get = (request, response) => {
     const con = mysql.createConnection({
-        host: "Hostname",
-        user: "Username",
-        password: "Password",
-        database: "DB name"
+        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
+        user: "admin",
+        password: "dinosaurio.99",
+        database: "DesignDB"
     });
 
     con.connect();
-    const sql = "SELECT Latitud AS lat, Longitude AS lon, Time AS time FROM SyrusData WHERE Num = (SELECT Max(Num) FROM SyrusData);";
+    const sql = "SELECT Latitude AS lat, Longitude AS lon, Time AS time FROM SyrusData WHERE Num = (SELECT Max(Num) FROM SyrusData);";
     con.query(sql, function(err, result) {
         if (err) throw err;
         response.json(result[0]);

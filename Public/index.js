@@ -18,7 +18,7 @@ req.onreadystatechange = function(aEvt) {
             const res = JSON.parse(req.responseText);
             const lat = `<b>latitud:</b> ${res.lat} `;
             const lon = `<b>longitud:</b> ${res.lon} `;
-            const time = `<b>tiempo:</b> ${res.time} `;
+            const time = `<b>tiempo:</b> ${new Date(res.time).toString()} `;
             const texti = '<p>' + lat + lon + time + '</p>';
             $('#syrus').html(texti);
             const polyLength = polyline.getLatLngs().length;
@@ -26,7 +26,7 @@ req.onreadystatechange = function(aEvt) {
             if (polyline.isEmpty()||((res.lat != lastPos.lat) && (res.lon != lastPos.lng))){
                 polyline.addLatLng([res.lat, res.lon]);
                 marker.setLatLng([res.lat, res.lon]);
-	            markers.push(L.circleMarker([res.lat,res.lon],5).addTo(mymap));
+	            markers.push(L.circleMarker([res.lat,res.lon],5).addTo(mymap).setRadius(1));
             }
         }
     }
