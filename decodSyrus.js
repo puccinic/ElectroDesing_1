@@ -2,6 +2,13 @@
 
 const mysql = require('mysql');
 
+const dbCon = {
+    host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
+    user: "admin",
+    password: "dinosaurio.99",
+    database: "DesignDB"
+};
+
 exports.decode = (msg) => {
     const message = msg.toString();
     const numWeeks = parseInt(message.slice(6, 10));
@@ -21,13 +28,7 @@ exports.decode = (msg) => {
 };
 
 exports.insert = (msg) => {
-    const con = mysql.createConnection({
-        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
-        user: "admin",
-        password: "dinosaurio.99",
-        database: "DesignDB"
-    });
-
+    const con = mysql.createConnection(dbCon);
     con.connect();
     const sql = `INSERT INTO SyrusData(Latitude,Longitude,Time) VALUES(${msg.lat},${msg.lon},${msg.time})`;
     con.query(sql,function(err, result) {
@@ -57,12 +58,7 @@ exports.get = (request, response) => {
 
 
 exports.search = (request,response) => {
-    const con = mysql.createConnection({
-        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
-        user: "admin",
-        password: "dinosaurio.99",
-        database: "DesignDB"
-    });
+    const con = mysql.createConnection(dbCon);
     con.connect();
     const sql = `SELECT Latitude AS lat, Longitude AS lon, Time AS time
                 FROM SyrusData

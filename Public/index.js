@@ -11,30 +11,38 @@ let markers = [];
 let latlngs = [];
 let marker = L.marker([51.5, -0.09]).addTo(mymap);
 let polyline = L.polyline(latlngs, {color: 'green'}).addTo(mymap);
-const req = new XMLHttpRequest();
-req.onreadystatechange = function(aEvt) {
-    if (req.readyState == 4) {
-        if (req.status == 200) {
-            const res = JSON.parse(req.responseText);
-            const lat = `<b>latitud:</b> ${res.lat} `;
-            const lon = `<b>longitud:</b> ${res.lon} `;
-            const time = `<b>tiempo:</b> ${new Date(res.time).toString()} `;
-            const texti = '<p>' + lat + lon + time + '</p>';
-            $('#syrus').html(texti);
-            const polyLength = polyline.getLatLngs().length;
-            const lastPos = polyline.getLatLngs()[polyLength-1];
-            if (polyline.isEmpty()||((res.lat != lastPos.lat) && (res.lon != lastPos.lng))){
-                polyline.addLatLng([res.lat, res.lon]);
-                marker.setLatLng([res.lat, res.lon]);
-	            markers.push(L.circleMarker([res.lat,res.lon],5).addTo(mymap).setRadius(1));
-            }
-        }
+
+$.get('/Appdata').done(function (data){
+    const lat = `<b>latitud:</b> ${data.lat} `;
+    const lon = `<b>longitud:</b> ${data.lon} `;
+    const time = `<b>tiempo:</b> ${new Date(data.time).toString()} `;
+    const texti = '<p>' + lat + lon + time + '</p>';
+    $('#syrus').html(texti);
+    const polyLength = polyline.getLatLngs().length;
+    const lastPos = polyline.getLatLngs()[polyLength-1];
+    if (polyline.isEmpty()||((data.lat != lastPos.lat) && (data.lon != lastPos.lng))){
+        polyline.addLatLng([data.lat, data.lon]);
+        marker.setLatLng([data.lat, data.lon]);
+        markers.push(L.circleMarker([data.lat,data.lon],5).addTo(mymap).setRadius(1));
     }
-};
-window.setInterval(function() {
-    req.open('GET', '/Appdata', true);
-    req.send(null);
-}, 5000);
+});
+
+
+window.setInterval(
+    $.get('/Appdata').done(function (data){
+        const lat = `<b>latitud:</b> ${data.lat} `;
+        const lon = `<b>longitud:</b> ${data.lon} `;
+        const time = `<b>tiempo:</b> ${new Date(data.time).toString()} `;
+        const texti = '<p>' + lat + lon + time + '</p>';
+        $('#syrus').html(texti);
+        const polyLength = polyline.getLatLngs().length;
+        const lastPos = polyline.getLatLngs()[polyLength-1];
+        if (polyline.isEmpty()||((data.lat != lastPos.lat) && (data.lon != lastPos.lng))){
+            polyline.addLatLng([data.lat, data.lon]);
+            marker.setLatLng([data.lat, data.lon]);
+            markers.push(L.circleMarker([data.lat,data.lon],5).addTo(mymap).setRadius(1));
+        }
+    }), 5000);
 
 
 $('.myButton').click(function () {
