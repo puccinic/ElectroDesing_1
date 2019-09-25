@@ -11,7 +11,7 @@ let markers = [];
 let latlngs = [];
 let marker = L.marker([51.5, -0.09]).addTo(mymap);
 let polyline = L.polyline(latlngs, {color: 'green'}).addTo(mymap);
-let req = new XMLHttpRequest();
+const req = new XMLHttpRequest();
 req.onreadystatechange = function(aEvt) {
     if (req.readyState == 4) {
         if (req.status == 200) {
@@ -35,3 +35,16 @@ window.setInterval(function() {
     req.open('GET', '/Appdata', true);
     req.send(null);
 }, 5000);
+
+
+$('.myButton').click(function () {
+    $('.info').text('');
+    const timeMargin = {initTime: new Date($('#init-date').val()).getTime(),
+                      finalTime : new Date($('#final-date').val()).getTime()
+                     };
+
+    $.post('/',timeMargin).done(function (data){
+        console.log(data);
+    });
+
+});

@@ -1,6 +1,7 @@
 // jshint esversion: 6
 
 const mysql = require('mysql');
+const bodyParser = require("body-parser");
 
 exports.decode = (msg) => {
     const message = msg.toString();
@@ -51,6 +52,26 @@ exports.get = (request, response) => {
     con.query(sql, function(err, result) {
         if (err) throw err;
         response.json(result[0]);
+    });
+    con.end();
+};
+
+
+exports.search = (request,response) => {
+    const con = mysql.createConnection({
+        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
+        user: "admin",
+        password: "dinosaurio.99",
+        database: "DesignDB"
+    });
+    con.connect();
+    const sql = `SELECT Latitude AS lat, Longitude AS lon, Time AS time
+                FROM SyrusData
+                WHERE time > ${request.body.initTime} and time < ${request.body.finalTime};`;
+    con.query(sql, function(err, result) {
+        if (err) throw err;
+        console.log(result);
+        response.json(result);
     });
     con.end();
 };

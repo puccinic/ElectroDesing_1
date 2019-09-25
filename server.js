@@ -4,6 +4,7 @@ const dgram = require('dgram');
 const express = require('express');
 const mysql = require('mysql');
 const decodSyrus = require('./decodSyrus.js');
+const bodyParser = require("body-parser");
 const IP_ADRESS = '192.168.1.13';
 const UDP_PORT = '5000';
 const TCP_PORT = 3000;
@@ -30,12 +31,17 @@ server.on('listening', () => {
 server.bind(UDP_PORT, IP_ADRESS);
 
 app.use(express.static('Public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/', function(request, response){
   response.sendFile(__dirname + '/index.html');
 });
 
 app.get('/Appdata',decodSyrus.get);
+
+
+app.post('/',decodSyrus.search);
 
 app.listen(TCP_PORT, function(){
   console.log('Server started at port ' + TCP_PORT.toString());
