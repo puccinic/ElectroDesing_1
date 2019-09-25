@@ -40,12 +40,7 @@ exports.insert = (msg) => {
 
 
 exports.get = (request, response) => {
-    const con = mysql.createConnection({
-        host: "database-1.cgh4kgpy7rzv.us-east-1.rds.amazonaws.com",
-        user: "admin",
-        password: "dinosaurio.99",
-        database: "DesignDB"
-    });
+    const con = mysql.createConnection(dbCon);
 
     con.connect();
     const sql = "SELECT Latitude AS lat, Longitude AS lon, Time AS time FROM SyrusData WHERE Num = (SELECT Max(Num) FROM SyrusData);";
