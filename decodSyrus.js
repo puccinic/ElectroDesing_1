@@ -29,7 +29,7 @@ exports.insert = (msg) => {
     });
 
     con.connect();
-    const sql = `INSERT INTO SyrusData(Latitude,Longitude,Time) VALUES(${msg.lat},${msg.lon},'${msg.time}')`;
+    const sql = `INSERT INTO SyrusData(Latitude,Longitude,Time) VALUES(${msg.lat},${msg.lon},${msg.time})`;
     con.query(sql,function(err, result) {
         if (err) throw err;
         console.log("record inserted");

@@ -4,7 +4,7 @@ const dgram = require('dgram');
 const express = require('express');
 const mysql = require('mysql');
 const decodSyrus = require('./decodSyrus.js');
-const IP_ADRESS = '192.168.1.13';
+const IP_ADRESS = '10.20.6.103';
 const UDP_PORT = '5000';
 const TCP_PORT = 3000;
 
