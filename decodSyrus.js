@@ -1,7 +1,6 @@
 // jshint esversion: 6
 
 const mysql = require('mysql');
-const bodyParser = require("body-parser");
 
 exports.decode = (msg) => {
     const message = msg.toString();
@@ -67,7 +66,7 @@ exports.search = (request,response) => {
     con.connect();
     const sql = `SELECT Latitude AS lat, Longitude AS lon, Time AS time
                 FROM SyrusData
-                WHERE time > ${request.body.initTime} and time < ${request.body.finalTime};`;
+                WHERE time > ${request.query.initTime} and time < ${request.query.finalTime};`;
     con.query(sql, function(err, result) {
         if (err) throw err;
         console.log(result);

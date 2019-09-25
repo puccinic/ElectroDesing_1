@@ -43,7 +43,7 @@ $('.myButton').click(function () {
                       finalTime : new Date($('#final-date').val()).getTime()
                      };
 
-    $.post('/',timeMargin).done(function (data){
+    $.get('/search',timeMargin).done(function (data){
         console.log(data);
     });
 
