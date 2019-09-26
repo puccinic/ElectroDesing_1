@@ -65,5 +65,6 @@ $('.myButton').click(function() {
         hPolyline = L.polyline(latlngs, {
             color: 'red'
         }).addTo(mymap);
+        hMarker.setLatLng(latlngs[latlngs.length-1);
     });
 });
