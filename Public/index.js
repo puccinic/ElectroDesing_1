@@ -62,6 +62,6 @@ $('.myButton').click(function() {
     $.get('/search', timeMargin).done(function(data) {
         console.log(data);
     });
-    console.log(data);
+    
 
 });
