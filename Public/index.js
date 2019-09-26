@@ -29,7 +29,7 @@ $.get('/Appdata').done(function (data){
 
 
 window.setInterval(
-    $.get('/Appdata').done(function (data){
+    $.get('/Appdata').succes(function (data){
         const lat = `<b>latitud:</b> ${data.lat} `;
         const lon = `<b>longitud:</b> ${data.lon} `;
         const time = `<b>tiempo:</b> ${new Date(data.time).toString()} `;
