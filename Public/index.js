@@ -59,8 +59,9 @@ $('.myButton').click(function() {
         finalTime: new Date($('#final-date').val()).getTime()
     };
 
-    $.get('/search', timeMargin).done(function(data) {
-        console.log(data);
+    let data =$.get('/search', timeMargin).done(function(data) {
+        return data;
     });
+    console.log(data);
 
 });
