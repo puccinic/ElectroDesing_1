@@ -54,14 +54,14 @@ $('.myButton').click(function() {
             markers[1].pop();
         }
         let latlngs = [];
-        for (let row in data){
+        data.forEach(function(row){
             console.log(row);
             let lastPos = latlngs[latlngs.length-1];
             if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1])){
                 latlngs.push([row.lat,row.lon]);
                 //markers[1].push(L.circleMarker([1,1], 5).addTo(mymap).setRadius(1));
             }
-        }
+        });
         console.log(latlngs);
         //hMarker.setLatLng(latlngs[latlngs.length-1]);
         hPolyline = L.polyline(latlngs, {
