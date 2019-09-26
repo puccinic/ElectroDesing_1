@@ -58,7 +58,7 @@ $('.myButton').click(function() {
         initTime: new Date($('#init-date').val()).getTime(),
         finalTime: new Date($('#final-date').val()).getTime()
     };
-
+    // cambio
     $.get('/search', timeMargin).done(function(data) {
         console.log(data);
     });
