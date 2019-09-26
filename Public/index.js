@@ -55,6 +55,7 @@ $('.myButton').click(function() {
         }
         let latlngs = [];
         for (let row in data){
+            console.log(row);
             let lastPos = latlngs[latlngs.length-1];
             if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1])){
                 latlngs.push([row.lat,row.lon]);
