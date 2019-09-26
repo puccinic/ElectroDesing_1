@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Web Diseño Electrónico</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 </head>
 
@@ -14,17 +15,14 @@
 
     </div>
     <div id="mapid" style="height:180px;"></div>
-    <form class="sdsa" action="index.html" method="post">
         <label for="meeting-time">Escoger tiempo inicial:</label>
         <input type="datetime-local" id="init-date" name="meeting-time" value="2019-08-01T00:00" min="2019-08-01T00:00" max="2019-12-31T00:00">
         <br>
         <br>
         <label for="meeting-time">Escoger tiempo final:</label>
         <input type="datetime-local" id="final-date" name="meeting-time" value="2019-08-01T00:00" min="2019-08-01T00:00" max="2019-12-31T00:00">
-    </form>
     <div class="myButton">Buscar</div>
     <div class="info">
-
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="index.js"></script>
