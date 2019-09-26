@@ -7,28 +7,15 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1IjoicHVjY2luaWMiLCJhIjoiY2swOTh3NHA2MDVoczNtbW5odXAybDlxbSJ9.ySZV9JduMLAW8DphUa4Bsg'
 }).addTo(mymap);
-let markers = [];
-let latlngs = [];
+let markers = [[],[]];
 let marker = L.marker([51.5, -0.09]).addTo(mymap);
-let polyline = L.polyline(latlngs, {
+let hMarker = L.marker([51.5, -0.09]).addTo(mymap);
+let polyline = L.polyline([], {
     color: 'green'
 }).addTo(mymap);
-
-$.get('/Appdata').done(function(data) {
-    const lat = `<b>latitud:</b> ${data.lat} `;
-    const lon = `<b>longitud:</b> ${data.lon} `;
-    const time = `<b>tiempo:</b> ${new Date(data.time).toString()} `;
-    const texti = '<p>' + lat + lon + time + '</p>';
-    $('#syrus').html(texti);
-    const polyLength = polyline.getLatLngs().length;
-    const lastPos = polyline.getLatLngs()[polyLength - 1];
-    if (polyline.isEmpty() || ((data.lat != lastPos.lat) && (data.lon != lastPos.lng))) {
-        polyline.addLatLng([data.lat, data.lon]);
-        marker.setLatLng([data.lat, data.lon]);
-        markers.push(L.circleMarker([data.lat, data.lon], 5).addTo(mymap).setRadius(1));
-    }
-});
-
+let hPolyline = L.polyline([], {
+    color: 'red'
+}).addTo(mymap);
 
 window.setInterval(function() {
     const settings = {
@@ -41,10 +28,10 @@ window.setInterval(function() {
             $('#syrus').html(texti);
             const polyLength = polyline.getLatLngs().length;
             const lastPos = polyline.getLatLngs()[polyLength - 1];
-            if (polyline.isEmpty() || ((data.lat != lastPos.lat) && (data.lon != lastPos.lng))) {
+            if (polyline.isEmpty() || ((data.lat != lastPos.lat) || (data.lon != lastPos.lng))) {
                 polyline.addLatLng([data.lat, data.lon]);
                 marker.setLatLng([data.lat, data.lon]);
-                markers.push(L.circleMarker([data.lat, data.lon], 5).addTo(mymap).setRadius(1));
+                markers[0].push(L.circleMarker([data.lat, data.lon], 5).addTo(mymap).setRadius(1));
             }
         }
     };
@@ -61,7 +48,21 @@ $('.myButton').click(function() {
     // cambio
     $.get('/search', timeMargin).done(function(data) {
         console.log(data);
+        mymap.removeLayer(hPolyline);
+        for(let i = markers[1].length - 1; i >= 0; i--){
+            mymap.removeLayer(markers[1][i]);
+            markers[1].pop();
+        }
+        let latlngs = [];
+        for (let row in data){
+            let lastPos = latlngs[latlngs.length-1];
+            if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1])){
+                latlngs.push([row.lat,row.lon]);
+            }
+        }
+        hMarker.setLatLng(latlngs[latlngs.length-1]);
+        hPolyline = L.polyline(latlngs, {
+            color: 'red'
+        }).addTo(mymap);
     });
-    
-
 });
