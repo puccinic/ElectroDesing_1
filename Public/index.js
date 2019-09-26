@@ -48,6 +48,7 @@ $('.myButton').click(function() {
     // cambio
     $.get('/search', timeMargin).done(function(data) {
         console.log(data);
+        hMarker.setLatLng([51.5, -0.09]);
         mymap.removeLayer(hPolyline);
         for(let i = markers[1].length - 1; i >= 0; i--){
             mymap.removeLayer(markers[1][i]);
@@ -55,15 +56,12 @@ $('.myButton').click(function() {
         }
         let latlngs = [];
         data.forEach(function(row){
-            console.log(row);
             let lastPos = latlngs[latlngs.length-1];
-            if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1])){
+            if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1] || row.lat === undefined || row.lon != undefined)){
                 latlngs.push([row.lat,row.lon]);
                 markers[1].push(L.circleMarker([row.lat,row.lon], 5).addTo(mymap).setRadius(1));
             }
         });
-        console.log(latlngs);
-        hMarker.setLatLng(latlngs[latlngs.length-1]);
         hPolyline = L.polyline(latlngs, {
             color: 'red'
         }).addTo(mymap);
