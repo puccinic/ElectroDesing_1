@@ -57,7 +57,7 @@ exports.search = (request,response) => {
     con.connect();
     const sql = `SELECT Latitude AS lat, Longitude AS lon, Time AS time
                 FROM SyrusData
-                WHERE time > ${request.query.initTime} and time < ${request.query.finalTime}
+                WHERE time BETWEEN ${request.query.initTime} and ${request.query.finalTime}
                 ORDER BY time;`;
     con.query(sql, function(err, result) {
         if (err) throw err;

@@ -1,21 +1,33 @@
 // jshint esversion: 6
 
 let mymap = L.map('mapid').setView([11.0192, -74.8505], 15);
+let hMymap = L.map('hmapid').setView([11.0192, -74.8505], 15);
+
+
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1IjoicHVjY2luaWMiLCJhIjoiY2swOTh3NHA2MDVoczNtbW5odXAybDlxbSJ9.ySZV9JduMLAW8DphUa4Bsg'
 }).addTo(mymap);
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.streets',
+    accessToken: 'pk.eyJ1IjoicHVjY2luaWMiLCJhIjoiY2swOTh3NHA2MDVoczNtbW5odXAybDlxbSJ9.ySZV9JduMLAW8DphUa4Bsg'
+}).addTo(hMymap);
+
+
 let markers = [[],[]];
 let marker = L.marker([51.5, -0.09]).addTo(mymap);
-let hMarker = L.marker([51.5, -0.09]).addTo(mymap);
+let hMarker = L.marker([51.5, -0.09]).addTo(hMymap);
 let polyline = L.polyline([], {
     color: 'green'
 }).addTo(mymap);
 let hPolyline = L.polyline([], {
     color: 'red'
-}).addTo(mymap);
+}).addTo(hMymap);
 
 window.setInterval(function() {
     const settings = {
@@ -49,9 +61,9 @@ $('.myButton').click(function() {
     $.get('/search', timeMargin).done(function(data) {
         console.log(data);
         hMarker.setLatLng([51.5, -0.09]);
-        mymap.removeLayer(hPolyline);
+        hMymap.removeLayer(hPolyline);
         for(let i = markers[1].length - 1; i >= 0; i--){
-            mymap.removeLayer(markers[1][i]);
+            hMymap.removeLayer(markers[1][i]);
             markers[1].pop();
         }
         let latlngs = [];
@@ -59,12 +71,12 @@ $('.myButton').click(function() {
             let lastPos = latlngs[latlngs.length-1];
             if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1] || row.lat === undefined || row.lon != undefined)){
                 latlngs.push([row.lat,row.lon]);
-                markers[1].push(L.circleMarker([row.lat,row.lon], 5).addTo(mymap).setRadius(1));
+                markers[1].push(L.circleMarker([row.lat,row.lon], 5).addTo(hMymap).setRadius(1));
             }
         });
         hPolyline = L.polyline(latlngs, {
             color: 'red'
-        }).addTo(mymap);
+        }).addTo(hMymap);
         hMarker.setLatLng(latlngs[latlngs.length-1]);
     });
 });
