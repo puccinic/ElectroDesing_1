@@ -66,17 +66,21 @@ $('.myButton').click(function() {
             hMymap.removeLayer(markers[1][i]);
             markers[1].pop();
         }
-        let latlngs = [];
-        data.forEach(function(row){
-            let lastPos = latlngs[latlngs.length-1];
-            if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1] || row.lat === undefined || row.lon != undefined)){
-                latlngs.push([row.lat,row.lon]);
-                markers[1].push(L.circleMarker([row.lat,row.lon], 5).addTo(hMymap).setRadius(1));
-            }
-        });
-        hPolyline = L.polyline(latlngs, {
-            color: 'red'
-        }).addTo(hMymap);
-        hMarker.setLatLng(latlngs[latlngs.length-1]);
+        if (data.length != 0){
+            let latlngs = [];
+            data.forEach(function(row){
+                let lastPos = latlngs[latlngs.length-1];
+                if(latlngs.length === 0||(row.lat != lastPos[0] || row.lon != lastPos[1])){
+                    latlngs.push([row.lat,row.lon]);
+                    markers[1].push(L.circleMarker([row.lat,row.lon], 5).addTo(hMymap).setRadius(1));
+                }
+            });
+            hPolyline = L.polyline(latlngs, {
+                color: 'red'
+            }).addTo(hMymap);
+            hMarker.setLatLng(latlngs[latlngs.length-1]);
+        } else {
+            alert('no hay datos disponibles para esa fecha');
+        }
     });
 });
