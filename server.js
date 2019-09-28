@@ -4,7 +4,7 @@ const dgram = require('dgram');
 const express = require('express');
 const mysql = require('mysql');
 const decodSyrus = require('./decodSyrus.js');
-const IP_ADRESS = '192.168.1.67';
+const IP_ADRESS = '192.168.1.14';
 const UDP_PORT = '50000';
 const TCP_PORT = 3000;
 
@@ -33,6 +33,14 @@ app.use(express.static('Public'));
 
 app.get('/', function(request, response){
   response.sendFile(__dirname + '/index.html');
+});
+
+app.get('/ubicacion', function(request, response){
+  response.sendFile(__dirname + '/index_ubicacion.html');
+});
+
+app.get('/historico', function(request, response){
+  response.sendFile(__dirname + '/index_historico.html');
 });
 
 app.get('/Appdata',decodSyrus.get);
