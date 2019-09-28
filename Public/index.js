@@ -33,9 +33,9 @@ window.setInterval(function() {
     const settings = {
         url: '/Appdata',
         success: function(data) {
-            const lat = `<b>latitud:</b> ${data.lat} `;
-            const lon = `<b>longitud:</b> ${data.lon} `;
-            const time = `<b>tiempo:</b> ${new Date(data.time).toString()} `;
+            const lat = `<b>Latitud:</b> ${data.lat} `;
+            const lon = `<b>Longitud:</b> ${data.lon} `;
+            const time = `<b>Tiempo:</b> ${new Date(data.time).toString()} `;
             const texti = '<p>' + lat + lon + time + '</p>';
             $('#syrus').html(texti);
             const polyLength = polyline.getLatLngs().length;
