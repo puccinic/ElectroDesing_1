@@ -13,7 +13,7 @@ exports.decode = (msg) => {
     const message = msg.toString();
     const numWeeks = parseInt(message.slice(6, 10));
     const numDay = parseInt(message[10]);
-    const dayTime = parseInt(message.slice(11, 16)) - (5 * 3600);
+    const dayTime = parseInt(message.slice(11, 16));
     const totalSeconds = (numWeeks * 604800) + (numDay * 86400) + dayTime;
     const totalMilis = totalSeconds * 1000;
     const date = totalMilis + (new Date(1980, 0, 6).getTime());
