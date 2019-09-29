@@ -16,7 +16,6 @@ let polyline = L.polyline([], {
 }).addTo(mymap);
 
 $('.myButton').click(function() {
-    $('.info').text('');
     const timeMargin = {
         initTime: new Date($('#init-date').val()).getTime(),
         finalTime: new Date($('#final-date').val()).getTime()
@@ -43,6 +42,7 @@ $('.myButton').click(function() {
                 color: 'red'
             }).addTo(mymap);
             marker.setLatLng(latlngs[latlngs.length-1]);
+            mymap.setView(latlngs[latlngs.length-1],15);
         } else {
             alert('no hay datos disponibles para esa fecha');
         }

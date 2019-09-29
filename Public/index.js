@@ -52,7 +52,6 @@ window.setInterval(function() {
 
 
 $('.myButton').click(function() {
-    $('.info').text('');
     const timeMargin = {
         initTime: new Date($('#init-date').val()).getTime(),
         finalTime: new Date($('#final-date').val()).getTime()

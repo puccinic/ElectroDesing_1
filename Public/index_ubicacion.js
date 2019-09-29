@@ -30,6 +30,7 @@ window.setInterval(function() {
                 polyline.addLatLng([data.lat, data.lon]);
                 marker.setLatLng([data.lat, data.lon]);
                 markers.push(L.circleMarker([data.lat, data.lon], 5).addTo(mymap).setRadius(1));
+                mymap.setView([data.lat, data.lon],15);
             }
         }
     };
